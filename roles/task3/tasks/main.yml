@@ -1,0 +1,12 @@
+---
+- name: Changing the hostname to {{ new_fqdn }}
+  ansible.builtin.hostname:
+    name: "{{ new_fqdn }}"
+
+- name: Changing the /etc/hosts file
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    insertafter: '^127\.0\.0\.1'
+    state: present
+    line: '{{ ansible_facts.default_ipv4.address }} {{ new_fqdn }} {{ new_hostname }}'
+  notify: Rebooting host

@@ -1,0 +1,8 @@
+---
+# vars file for task2
+mysql_pkg: mysql-server
+mysql_service: mysqld.service
+mysql_fwrule: mysql
+db_name: conferencia
+mysql_username: szervezo
+mysql_user_passwd: jelszo123

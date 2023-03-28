@@ -1,0 +1,8 @@
+---
+# vars file for task1
+webserver_pk: httpd
+fw_pk: firewalld
+webserver_service: httpd
+fw_service: firewalld
+fw_rule: http
+doc_root: /opt/www

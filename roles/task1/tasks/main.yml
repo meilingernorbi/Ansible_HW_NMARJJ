@@ -1,0 +1,43 @@
+---
+- name: Required packages installed
+  ansible.builtin.dnf:
+    name:
+      - "{{ webserver_pk }}"
+      - "{{ fw_pk}}"
+    state: latest
+
+- name: Starting and enabling {{ fw_service }} service
+  ansible.builtin.service:
+    name: "{{ fw_service }}"
+    enabled: true
+    state: started
+
+- name: Starting and enabling {{ webserver_service }} service
+  ansible.builtin.service:
+    name: "{{ webserver_service }}"
+    enabled: true
+    state: started
+
+- name: Creating {{ doc_root }}
+  ansible.builtin.file:
+    path: "{{ doc_root }}"
+    state: directory
+    mode: '0770'
+    setype: httpd_sys_content_t
+
+
+- name: Opening a port for {{ fw_rule }}
+  ansible.posix.firewalld:
+    service: "{{ fw_rule }}"
+    state: enabled
+    permanent: true
+    immediate: true
+
+- name: Changing Document Root to {{ doc_root }}
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: "^DocumentRoot"
+    line: DocumentRoot "{{ doc_root }}"
+    backrefs: true
+  notify:
+    - Restarting httpd 

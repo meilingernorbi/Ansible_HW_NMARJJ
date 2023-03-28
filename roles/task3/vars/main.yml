@@ -1,0 +1,4 @@
+---
+# vars file for task3
+new_fqdn: web.example.org
+new_hostname: web

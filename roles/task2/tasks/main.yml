@@ -1,0 +1,43 @@
+---
+- name: Installing mysql package
+  ansible.builtin.dnf:
+    name: "{{ mysql_pkg }}"
+    state: present
+
+- name: Startig and enabling mysql service
+  ansible.builtin.service:
+    name: "{{ mysql_service }}"
+    state: started
+    enabled: true
+
+- name: Installing pip
+  ansible.builtin.dnf:
+    name: python3-pip
+    state: present
+
+- name: Installing the pymysql module
+  ansible.builtin.pip:
+    name: pymysql
+    state: latest
+  
+- name: Firewall rule added to allow MySQL
+  ansible.posix.firewalld:
+    service: "{{ mysql_fwrule }}"
+    permanent: true
+    state: enabled
+    immediate: true
+
+- name: Creating a {{ db_name }} DB
+  community.mysql.mysql_db:
+    name: "{{ db_name }}"
+    state: present
+
+- name: Creating a {{ mysql_username }} user with all rights 
+  community.mysql.mysql_user:
+    name: "{{ mysql_username }}"
+    password: "{{ mysql_user_passwd }}"
+    priv: '*.*:ALL'
+    state: present
+
+
+

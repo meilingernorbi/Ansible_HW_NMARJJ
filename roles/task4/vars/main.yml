@@ -1,0 +1,9 @@
+---
+# vars file for task4
+mysql_database: conferencia
+mysql_username: szervezo
+mysql_dump: dump.sql
+mysql_passwd: jelszo123
+cr_weekday: 0
+cr_hour: 23
+cr_minute: 0

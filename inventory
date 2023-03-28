@@ -1,0 +1,5 @@
+[my_hosts]
+serverc.lab.example.com
+
+[my_hosts:vars]
+ansible_python_interpreter=/usr/bin/python3
