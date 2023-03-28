@@ -2,8 +2,6 @@
 
 - name: Running all tasks in the homework
   hosts: my_hosts
-  playbook-artifact:
-    enable: false
 
   roles:
     - task1
